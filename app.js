@@ -15,8 +15,6 @@ var blogRoutes = require("./routes/blogs"),
 
 // APP CONFIG
 mongoose.connect(process.env.DATABASEURL);
-// mongoose.connect("mongodb://Bidyut:bidyutsochlo@ds111638.mlab.com:11638/sochlo");
-
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
