@@ -1,0 +1,35 @@
+i.icon {
+    font-size: 2em;
+}
+
+.container.main {
+    margin-top: 7.0em;
+}
+
+#delete {
+    display: inline;
+}
+#secretcode{
+    display:none;
+}
+
+.deletebtn{
+    background-color: inherit;
+}
+.deletebtn:hover{
+    color: red;
+}
+.editbtn{
+    color: inherit;
+    background-color: inherit;
+}
+.editbtn:hover{
+    color: orange;
+}
+.delete-form{
+    display: inline;
+}
+
+/*.navbar-inverse{*/
+/*	background-color: #2c3e50;*/
+/*}*/
