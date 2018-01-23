@@ -14,7 +14,9 @@ var blogRoutes = require("./routes/blogs"),
     indexRoutes = require("./routes/index");
 
 // APP CONFIG
-mongoose.connect("mongodb://localhost/abhilasha");
+// mongoose.connect("mongodb://localhost/abhilasha");
+mongoose.connect("mongodb://Bidyut:bidyutsochlo@ds111638.mlab.com:11638/sochlo");
+
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
