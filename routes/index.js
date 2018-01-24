@@ -38,9 +38,12 @@ router.get("/login", function(req, res){
    res.render("login"); 
 });
 
+
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/blogs",
-    failureRedirect: "/"
+    failureRedirect: "/login",
+    failureFlash: true,
+    successFlash: 'Welcome to sochlo.in'
 }), function(req, res) {
 });
 
