@@ -19,7 +19,7 @@ router.post("/register", function(req, res){
         email:req.body.email,
         secretCode:req.body.secretCode
     });
-    if(req.body.secretCode === "AnkitaBidyutAbhilasha"){
+    if(req.body.secretCode === process.env.ADMIN_CODE){
         newUser.isAdmin = true;
     }
     User.register(newUser, req.body.password, function(err, user){
