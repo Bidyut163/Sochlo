@@ -14,7 +14,8 @@ var blogRoutes = require("./routes/blogs"),
     indexRoutes = require("./routes/index");
 
 // APP CONFIG
-mongoose.connect(process.env.DATABASEURL);
+var url =process.env.DATABASEURL || "mongodb://localhost/abhilasha";
+mongoose.connect(url);
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
