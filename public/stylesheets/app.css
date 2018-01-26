@@ -29,6 +29,10 @@ i.icon {
 .delete-form{
     display: inline;
 }
+#avatar{
+    font-weight:300;
+    color:red;
+}
 
 /*.navbar-inverse{*/
 /*	background-color: #2c3e50;*/

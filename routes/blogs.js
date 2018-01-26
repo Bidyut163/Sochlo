@@ -15,7 +15,7 @@ var imageFilter = function (req, file, cb) {
     }
     cb(null, true);
 };
-var upload = multer({ storage: storage, fileFilter: imageFilter})
+var upload = multer({ storage: storage, fileFilter: imageFilter});
 
 var cloudinary = require('cloudinary');
 cloudinary.config({ 
@@ -42,15 +42,6 @@ router.get("/new", middleware.isAdmin, function(req, res){
 
 // CREATE ROUTE
 router.post("/", middleware.isAdmin, upload.single('image'), function(req, res){
-    // create blog
-    // Blog.create(req.body.blog, function(err, newBlog){
-    //     if(err){
-    //         res.render("new");
-    //     } else {
-    //         res.redirect("/blogs");
-    //     }
-    // });
-    
     cloudinary.uploader.upload(req.file.path, function(result) {
       // add cloudinary url for the image to the campground object under image property
       req.body.blog.image = result.secure_url;
@@ -61,7 +52,7 @@ router.post("/", middleware.isAdmin, upload.single('image'), function(req, res){
       };
       Blog.create(req.body.blog, function(err, blog) {
         if (err) {
-          req.flash('error', err.message);
+          req.flash('error', "something went wrong");
           return res.redirect('back');
         }
         res.redirect('/blogs/');
