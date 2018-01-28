@@ -33,7 +33,74 @@ i.icon {
     font-weight:300;
     color:red;
 }
-
-/*.navbar-inverse{*/
+.label_style{
+    font-weight:300;
+    text-transform: uppercase;
+    font-family: Lato;
+}
+.header{
+    color: #4A434B  ;
+    text-align:center;
+    font-family:Lato;
+    text-transform: uppercase;
+}
+.submit_button{
+    outline: none;
+    background-color: transparent;
+    border-color: #8E44AD;
+    color: #8E44AD;
+    padding: 5px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+.submit_button:hover{
+    background-color: #8E44AD;
+    color: white;
+}
+.form_style{
+    width:50%; 
+    margin:25px auto;
+    border:1px solid #EA90FC; 
+    padding: 20px;
+    border-radius: 5px;
+}
+.input_style{
+    border-color: #EA90FC;
+}
+.jumbotron{
+    background-color: #4124C8;
+}
+#jumbo_header{
+    font-family: Lato;
+    font-weight: 700;
+    font-size: 30px;
+}
+.jumbo_content{
+    margin-left: 50px;
+    color:white;
+    text-transform: uppercase;
+    text-shadow: 2px 2px #2471C8;
+}
+.navbar-inverse{
 /*	background-color: #2c3e50;*/
-/*}*/
+border-radius: 0;
+}
+.button_login{
+    background-color: #2A8DC1;
+    color:white;
+    box-shadow: 0 4px #95A7B0;
+    position: relative;
+    text-transform: uppercase;
+    outline: none;
+    border:none;
+    letter-spacing:2px;
+}
+.button_login:hover{
+    box-shadow: 0 2px #7CA1CC;
+    color: #F8F5F5;
+    top:2px;
+}
+.button_login:active{
+    box-shadow: none;
+    top:4px;
+}

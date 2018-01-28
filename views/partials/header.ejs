@@ -2,6 +2,8 @@
     <head>
         <title>Sochlo.in</title>
         <link  rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link  rel="stylesheet" type="text/css" href="/stylesheets/app.css">
     </head>
     <body>
@@ -25,8 +27,8 @@
                             <li><a href="/blogs/new">New Post</a></li>
                         <% } %>
                         <% if(!currentUser){ %>
-                            <li><a href="/login">Log In</a></li>
-                            <li><a href="/register">Sign Up</a></li>
+                            <li><a href="/login">Log In <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                            <li><a href="/register">Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
                         <% }else{ %>
                             <li><a href="/user/<%= currentUser._id %>"><%= currentUser.username %></a></li>
                             <li><a href="/logout">Logout</a></li>
