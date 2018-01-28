@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+<div class="container">
+    <h1 class="header">New Article</h1>
+    <div class="form_style">
+        <form action="/blogs" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="label_style">Title:</label>
+                <input class="form-control input_style" type="text" name="blog[title]" placeholder="title">
+            </div>
+            <div class="form-group">
+                <label class="label_style" for="image">Image:</label>
+                <input class="form-control input_style" id="image" type="file" name="image" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label class="label_style">Blog Content:</label>
+                <textarea rows="15" class="form-control input_style" name="blog[body]"></textarea>
+            </div>
+            <input class="submit_button" type="submit">
+        </form>
+    </div>
+</div>
+<% include ../partials/footer %>
+

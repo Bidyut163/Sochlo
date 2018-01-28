@@ -1,0 +1,38 @@
+<% include ../partials/header %>
+<style>
+    .navbar-inverse{
+        margin-bottom:0;
+    }
+</style>
+
+<div class="jumbotron">
+    <div class="jumbo_content" id="jumbo_header">Sochlo</div>
+    <p class="jumbo_content">a site where you think</p>
+</div>
+<div class="container">
+    <div class="row">
+            <% blogs.forEach(function(blog){ %>
+                <div class="col-md-3 col-sm-6">
+                    <div class="thumbnail">
+                        <img src="<%= blog.image %>" >
+                    </div>
+                    <div class="content">
+                         <a class="header" href="/blogs/<%= blog._id %>"><%=blog.title%></a>
+                         <div class="meta">
+                             <span><%= blog.created.toDateString() %></span>
+                         </div>
+                         <div class="description">
+                             <p><%- blog.body.substring(0, 100) %>...</p>
+                         </div>
+                         <div class="">
+                             <a class="" href="/blogs/<%= blog._id %>">
+                                 Read More
+                             </a>
+                         </div>
+                    </div>
+                </div>
+            <% }) %>
+    </div>
+</div>
+
+<% include ../partials/footer %>
