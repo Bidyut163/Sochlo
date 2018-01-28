@@ -3,6 +3,7 @@ var router = express.Router();
 var Blog = require("../models/blog");
 var middleware = require("../middleware");
 var multer = require('multer');
+
 var storage = multer.diskStorage({
   filename: function(req, file, callback) {
     callback(null, Date.now() + file.originalname);
@@ -30,14 +31,14 @@ router.get("/", function(req, res){
        if(err){
            console.log("ERROR!");
        } else {
-          res.render("index", {blogs: blogs}); 
+          res.render("blogs/index", {blogs: blogs}); 
        }
    });
 });
 
 // NEW ROUTE
 router.get("/new", middleware.isAdmin, function(req, res){
-    res.render("new");
+    res.render("blogs/new");
 });
 
 // CREATE ROUTE
@@ -66,7 +67,7 @@ router.get("/:id", function(req, res){
        if(err){
            res.redirect("/blogs");
        } else {
-           res.render("show", {blog: foundBlog});
+           res.render("blogs/show", {blog: foundBlog});
        }
    });
 });
@@ -77,7 +78,7 @@ router.get("/:id/edit", middleware.isAdmin, function(req, res){
         if(err){
             res.redirect("/blogs");
         } else {
-            res.render("edit", {blog: foundBlog});
+            res.render("blogs/edit", {blog: foundBlog});
         }
     });
 });
