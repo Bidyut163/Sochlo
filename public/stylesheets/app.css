@@ -104,3 +104,10 @@ border-radius: 0;
     box-shadow: none;
     top:4px;
 }
+#login_signup li{
+    margin-left: 10px;
+    display: inline;
+}
+#login_signup li a{
+    text-decoration: none;
+}
