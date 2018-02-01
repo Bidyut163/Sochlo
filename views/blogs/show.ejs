@@ -26,6 +26,17 @@
                 <% } %>
             </div>
             <div class="well">
+                <div class="pull-right">
+                    <ul id="login_signup">
+                        <% if(!currentUser){ %>
+                            <li><a href="/login">Log In <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                            <li><a href="/register">Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
+                        <% }else{ %>
+                            <li><a href="/user/<%= currentUser._id %>"><%= currentUser.username %></a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        <% } %>
+                    </ul>
+                </div>
                 <form action="/blogs/<%= blog._id%>/comments" method="POST">
                     <div class="form-group">
                         <p style="text-transform:uppercase; color:blue; font-weight:700">comment:</p>
