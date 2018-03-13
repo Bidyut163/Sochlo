@@ -111,3 +111,7 @@ border-radius: 0;
 #login_signup li a{
     text-decoration: none;
 }
+
+.title{
+    font-weight: 700;
+}
