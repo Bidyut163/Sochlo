@@ -36,7 +36,7 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
+app.locals.moment = require('moment');
 //Current user config
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
