@@ -28,7 +28,7 @@ cloudinary.config({
 
 //Index Route    
 router.get("/", function(req, res){
-   res.redirect("/blogs"); 
+   res.render("landing"); 
 });
 
 // sign up form
