@@ -2,6 +2,34 @@ body {
   background-color: #000;
   font-family: 'Chicle', cursive;
 }
+
+.info{
+  font-family: 'Share Tech', sans-serif;
+  float: right;
+  margin: 20px;
+  line-height: 10px;
+  color: white;
+  z-index: 1;
+  position: relative;
+}
+
+.info h1{
+  font-size: 44px;
+}
+
+#day{
+  display: inline;
+}
+#month{
+  display: inline;
+  font-size: 14px;
+}
+
+#year{
+  letter-spacing: 1em;
+}
+
+
 #landing-header {
   z-index: 1;
   position: relative;
