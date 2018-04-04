@@ -4,6 +4,7 @@
         <title>Sochlo</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Share+Tech" rel="stylesheet">
         <link rel="stylesheet" href="/stylesheets/landing.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
     </head>
@@ -22,6 +23,13 @@
         <% } %>
     </div>
     
+    <div class="info">
+		<h3 id="day"></h3>
+		<h3 id="month"></h3>
+		<h1 id="day-name"></h1>
+		<h4 id="year"></h4>
+	</div>
+    
     <div id="landing-header">
  		<h1>Welcome to Sochlo!</h1>
 		<a href="/blogs" class="btn btn-lg btn-success">Go to Blogs &raquo;</a>
@@ -34,5 +42,5 @@
       <li></li>
       <li></li>
     </ul>
-
+    <script type="text/javascript" src="app.js"></script>
 <% include partials/footer %>
