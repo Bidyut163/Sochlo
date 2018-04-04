@@ -68,10 +68,10 @@ body {
 }
 
 .slideshow li:nth-child(1) { 
-  background-image: url(https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=139f00301feb37e712adda8bf9d8b91f&auto=format&fit=crop&w=750&q=80) 
+  background-image: url(https://images.unsplash.com/photo-1455165814004-1126a7199f9b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=04ca42e2f1482e1d5254204a6a8167c0&auto=format&fit=crop&w=750&q=80);
 }
 .slideshow li:nth-child(2) { 
-  background-image: url(https://images.unsplash.com/photo-1455165814004-1126a7199f9b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=04ca42e2f1482e1d5254204a6a8167c0&auto=format&fit=crop&w=750&q=80);
+  background-image: url(https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=139f00301feb37e712adda8bf9d8b91f&auto=format&fit=crop&w=750&q=80);
   animation-delay: 10s; 
 }
 .slideshow li:nth-child(3) { 
