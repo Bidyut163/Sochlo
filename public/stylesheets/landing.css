@@ -59,3 +59,10 @@ body {
 #members .fab {
   color: #fff;
 }
+
+
+@media (max-width: 768px) {
+  .info-header {
+    width: 100%;
+  }
+}
