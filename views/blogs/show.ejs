@@ -1,72 +1,79 @@
 <% include ../partials/header %>
+
+<section id="blog-content" class="py-5 my-5">
 <div class="container">
     
+    
     <div class="row">
-        <div class="col-md-3">
-            
-        </div>
-        
-        <div class="col-md-9">
-            <h4><%= blog.title %></h4>
-            <div class="content">
-                <span><%= blog.created.toDateString() %></span>
-            </div>
-            <div class="description">
-                <p><%- blog.body %></p>
-            </div>
-            <div>
-                <% if(currentUser && currentUser.isAdmin){ %>
-                    <div>
-                        <a class="btn btn-xs btn-warning" href="/blogs/<%= blog._id %>/edit">Edit</a>
-                        <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
-                            <button class="btn btn-xs btn-danger">Delete</button>
-                        </form>
-                        <hr>
+        <div class="col-md-9 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4><%= blog.title %></h4>
+                    <div class="content">
+                        <span><%= blog.created.toDateString() %></span>
                     </div>
-                <% } %>
-            </div>
-            <div class="well">
-                <div class="pull-right">
-                    <ul id="login_signup">
-                        <% if(!currentUser){ %>
-                            <li><a href="/login">Log In <i class="fa fa-user" aria-hidden="true"></i></a></li>
-                            <li><a href="/register">Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
-                        <% }else{ %>
-                            <li><a href="/user/<%= currentUser._id %>"><%= currentUser.username %></a></li>
-                            <li><a href="/logout">Logout</a></li>
-                        <% } %>
-                    </ul>
                 </div>
-                <form action="/blogs/<%= blog._id%>/comments" method="POST">
-                    <div class="form-group">
-                        <p style="text-transform:uppercase; color:blue; font-weight:700">comment:</p>
-                        <input class="form-control" type="text" name= "comment[text]" placeholder="add a comment">
-                    </div>
-                        <button class="btn btn-sm btn-success ">comment</button>
-                        <hr>
-                </form>
-                <% blog.comments.forEach(function(comment){ %>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <strong><%= comment.author.username %></strong>
-                            <span class="pull-right"><%= moment(comment.created).fromNow() %></span>
-                            <p>
-                                <%= comment.text %>
-                            </p>
-                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                                <a class="btn btn-xs editbtn" href="/blogs/<%= blog._id%>/comments/<%= comment._id%>/edit">Edit</a>
-                                <form class="delete-form" action="/blogs/<%= blog._id%>/comments/<%= comment._id%>?_method=DELETE" method="POST">
-                                     <button class="btn btn-xs deletebtn">Delete</button>
-                                 </form>
-                            <% } %>
-                            
+                
+                <div class="card-body">
+                    <p><%- blog.body %></p>
+                    <div>
+                    <% if(currentUser && currentUser.isAdmin){ %>
+                        <div>
+                            <a class="btn btn-xs btn-warning" href="/blogs/<%= blog._id %>/edit">Edit</a>
+                            <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-xs btn-danger">Delete</button>
+                            </form>
+                            <hr>
                         </div>
+                    <% } %>
+                </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="float-right">
+                        <ul id="login_signup">
+                            <% if(!currentUser){ %>
+                                <li><a href="/login">Log In <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                <li><a href="/register">Sign Up <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
+                            <% }else{ %>
+                                <li><a href="/user/<%= currentUser._id %>"><%= currentUser.username %></a></li>
+                                <li><a href="/logout">Logout</a></li>
+                            <% } %>
+                        </ul>
                     </div>
-                <% }) %>
-            </div>
-        </div>
-    </div>
+                    <form action="/blogs/<%= blog._id%>/comments" method="POST">
+                        <div class="form-group">
+                            <p style="text-transform:uppercase; color:blue; font-weight:700">comment:</p>
+                            <input class="form-control" type="text" name= "comment[text]" placeholder="add a comment">
+                        </div>
+                            <button class="btn btn-sm btn-success ">comment</button>
+                            <hr>
+                    </form>
+                    <% blog.comments.forEach(function(comment){ %>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong><%= comment.author.username %></strong>
+                                <span class="pull-right"><%= moment(comment.created).fromNow() %></span>
+                                <p>
+                                    <%= comment.text %>
+                                </p>
+                                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                    <a class="btn btn-xs editbtn" href="/blogs/<%= blog._id%>/comments/<%= comment._id%>/edit">Edit</a>
+                                    <form class="delete-form" action="/blogs/<%= blog._id%>/comments/<%= comment._id%>?_method=DELETE" method="POST">
+                                         <button class="btn btn-xs deletebtn">Delete</button>
+                                     </form>
+                                <% } %>
+                                
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div> <!-- card -->
+        </div> <!-- col-md-9 -->
+    </div> <!-- row -->
 </div>
+
+</section>
 
 <% include ../partials/footer %>
 

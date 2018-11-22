@@ -1,47 +1,64 @@
-<% include ../partials/header %>
-<style>
-    .navbar-inverse{
-        margin-bottom:0;
-    }
-</style>
+    <% include ../partials/header %>
 
-<div class="jumbotron">
-    <div class="jumbo_content" id="jumbo_header">Sochlo</div>
-    <p class="jumbo_content">a site where you think</p>
-</div>
-<div class="container">
-    <% blogs.forEach(function(blog){ %>
+    <!-- PAGE HEADER -->
+    <header id="page-header">
+      <div class="container">
         <div class="row">
-            <div class="col-md-5 col-sm-12">
-                <div class="thumbnail">
-                    <a class="header" href="/blogs/<%= blog._id %>"><%=blog.title%></a>
-                    <hr>
-                    <img src="<%= blog.image %>" >
-                </div>
-            </div>
-            
-                
-            <div class="col-md-7 col-sm-12">
-                <div class="content">
-                    <a class="header title" href="/blogs/<%= blog._id %>"><%=blog.title%></a>
-                        <div class="meta">
-                             <span><%= blog.created.toDateString() %></span>
-                        </div>
-                        
-                        <div class="description">
-                             <p><%- blog.body.substring(0, 300) %>...</p>
-                        </div>
-                        <div class="">
-                             <a class="" href="/blogs/<%= blog._id %>">
-                                <h6>Read More &raquo;</h6>
-                             </a>
-                        </div>
-                </div>
-            </div>
+          <div class="col-md-6 text-center m-auto">
+            <h1>Read Our Blog</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Doloremque, dolorem?
+            </p>
+          </div>
         </div>
-        <hr>
-        <% }) %>
-    </div>
-</div>
+      </div>
+    </header>
+    
+    <!-- BLOG SECTION-->
+    <section id="blog" class="py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="card-columns">
+              <% blogs.forEach(function(blog){ %>
+              <div class="card">
+                <a href="/blogs/<%= blog._id %>">
+                  <img class="img-fluid card-img-top" src="<%= blog.image %>" />
+                </a>
 
-<% include ../partials/footer %>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a class="header title" href="/blogs/<%= blog._id %>"
+                      ><%=blog.title%></a
+                    >
+                  </h4>
+                  <small class="text-muted">Written By Bidyut On 04/18</small>
+                  <div class="meta">
+                    <span><%= blog.created.toDateString() %></span>
+                  </div>
+                  <hr />
+
+                  <p class="card-text">
+                    <a
+                      style="text-decoration: none; color: #444;"
+                      href="/blogs/<%= blog._id %>"
+                      ><%- blog.body.substring(0, 100) %>...</a
+                    >
+                  </p>
+                </div>
+                <!-- card-body -->
+              </div>
+              <!-- card -->
+              <% }) %>
+            </div>
+            <!-- card-column -->
+          </div>
+          <!-- col -->
+        </div>
+        <!-- row -->
+      </div>
+      <!-- container -->
+    </section>
+
+    <% include ../partials/footer %>
