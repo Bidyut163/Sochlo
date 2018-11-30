@@ -1,7 +1,7 @@
     <% include ../partials/header %>
 
     <!-- PAGE HEADER -->
-    <section id="page-header">
+    <header id="page-header">
       <div class="container">
         <div class="row">
           <div class="col-md-6 text-center m-auto">
@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </header>
     
     <!-- BLOG SECTION-->
     <section id="blog" class="py-3">
@@ -29,7 +29,7 @@
 
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a class="header title" href="/blogs/<%= blog._id %>"
+                    <a style="text-decoration:none; color: black;" href="/blogs/<%= blog._id %>"
                       ><%=blog.title%></a
                     >
                   </h4>
