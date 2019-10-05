@@ -51,8 +51,8 @@ app.use("/blogs", blogRoutes);
 app.use("/blogs/:id/comments", commentRoutes);
 app.use("/", indexRoutes);
 
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
-app.listen(PORT, process.env.IP, function() {
-  console.log("SERVER IS RUNNING! at port", PORT);
+app.listen(port, process.env.IP, function() {
+  console.log("SERVER IS RUNNING! at port", port);
 });
