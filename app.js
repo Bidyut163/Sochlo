@@ -5,16 +5,18 @@ var bodyParser = require("body-parser"),
   passport = require("passport"),
   localStrategy = require("passport-local"),
   User = require("./models/user"),
+  middleware = require("./middleware"),
   flash = require("connect-flash"),
   express = require("express"),
   app = express();
 
 var blogRoutes = require("./routes/blogs"),
   commentRoutes = require("./routes/comments"),
-  indexRoutes = require("./routes/index");
+  indexRoutes = require("./routes/index"),
+  adminRoutes = require("./routes/admin");
 
 // APP CONFIG
-var url = process.env.DATABASEURL || "mongodb://localhost/abhilasha";
+var url = process.env.DATABASEURL || "mongodb://localhost/sochlo";
 mongoose.connect(url);
 
 app.set("view engine", "ejs");
@@ -47,6 +49,7 @@ app.use(function(req, res, next) {
 });
 
 // RESTFUL ROUTES
+app.use("/admin", middleware.isLoggedIn, adminRoutes);
 app.use("/blogs", blogRoutes);
 app.use("/blogs/:id/comments", commentRoutes);
 app.use("/", indexRoutes);
