@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+
+    <link rel="stylesheet" href="./stylesheets/css/style.css" />
+    <!-- Custom Stylesheet -->
+    
+    <title>Sochlo_home</title>
+  </head>
+  <body>
+    <div class="container">
+      <aside class="left-sidebar">
+        <img class="logo" src="./stylesheets/img/logo/brand2.png" />
+
+        <a href="<%= currentUser? '/Logout' : '/Login' %>" class="btn btn__login">
+        <%= currentUser? "Logout" : "Login" %>  
+        </a>
+        
+
+        <div class="catagories">
+          <ul class="catagories__list">
+            <li class="catagories__item">StartUps</li>
+            <li class="catagories__item">Apps</li>
+            <li class="catagories__item">Gadgets</li>
+            <li class="catagories__item">Video</li>
+            <li class="catagories__item">Audio</li>
+          </ul>
+        </div>
+        <!-- catagories -->
+
+        <div class="about">
+          <hr />
+          <ul class="about__list">
+            <% if(currentUser && currentUser.isAdmin){ %>
+            <li class="about__item"><a href="/admin/dashboard">Dashboard</a></li>
+            <% } %>
+            <li class="about__item">About</li>
+            <li class="about__item">Members</li>
+          </ul>
+        </div>
+        <!-- about -->
+
+        <div class="copyright">&copy; Sochlo</div>
+        <!-- copyright -->
+      </aside>
+      <!-- left-sidebar end -->
+
+      <article class="content">
+        <div class="showcase">
+          <div class="showcase__content">
+            <h1 class="heading-primary">
+              <% var post; %>
+              <% blogs.forEach(blog => {post = blog}) %>
+              <a href="/blogs/<%= post._id %>"><%= post.title %></a>
+              
+            </h1>
+            <p class="heading-tertiary">Frandies Karonis</p>
+            <div class="showcase__content--img-box">
+              <a href="/blogs/<%= post._id %>">
+                <img
+                  src="<%= post.image %>"
+                  alt="main-image"
+                  class="showcase__content--img"
+                />
+              </a>
+            </div>
+          </div>
+          <!-- showcase__content -->
+
+          <div class="showcase__sidebar">
+            <ul class="showcase__sidebar--list">
+              <% let i=0; blogs.forEach(blog => { %>
+              <% if(i < 4) { %>
+              <li class="showcase__sidebar--item">
+                <h2 class="heading-secondary">
+                  <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
+                </h2>
+                <p class="heading-tertiary">Frandies Karonis</p>
+                <hr />
+              </li>
+              <% } %>
+              <% i++; }) %>
+              <!-- item -->
+            </ul>
+            <!-- showcase__sideba--list  -->
+          </div>
+          <!-- showcase__sidebar -->
+        </div>
+        <!-- showcase -->
+        <h1 class="heading-tetiary mb-sm">The Latest</h1>
+        <hr class="mb-sm" />
+
+        <section class="articles_section">
+           <% let j=0; blogs.forEach(blog => { %>
+            <% if(j < 4) { %>
+          <div class="article">
+            <div class="article__heading">
+              <h1 class="heading-secondary mb-sm">
+                <%= blog.title %>
+              </h1>
+              <p class="small">Loreipsum</p>
+              <p class="date"><%= blog.created.toDateString() %></p>
+            </div>
+            <div class="article__content">
+              <p class="para">
+                <%- blog.body.substring(0, 500) %>...
+              </p>
+            </div>
+            <div class="article__img-box">
+              <img src="<%= blog.image %>" alt="article-img" class="article__img" />
+            </div>
+          </div>
+          <!-- article -->
+          <hr class="mb-sm" />
+          <% } %>
+          <% j++; }) %>
+        </section>
+        <!-- -------------------- -->
+      </article>
+      
+      <!-- content -->
+      
+
+      <aside class="right-sidebar">
+        <img src="./stylesheets/img/4.jpg" alt="addvertise" />
+
+        <img src="./stylesheets/img/5.jpg" alt="addvertise" />
+      </aside>
+    </div>
+    <!-- container -->
+  </body>
+</html>
