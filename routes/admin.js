@@ -14,8 +14,8 @@ router.get("/posts", (req, res) => {
   });
 });
 
-router.get("/catagories", (req, res) => {
-  res.render("admin/catagories");
+router.get("/categories", (req, res) => {
+  res.render("admin/categories");
 });
 
 router.get("/users", (req, res) => {
