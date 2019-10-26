@@ -1,40 +1,38 @@
-
 #delete {
-    display: inline;
+  display: inline;
 }
-#secretcode{
-    display:none;
-}
-
-.deletebtn{
-    background-color: inherit;
-}
-.deletebtn:hover{
-    color: red;
-}
-.editbtn{
-    color: inherit;
-    background-color: inherit;
-}
-.editbtn:hover{
-    color: orange;
-}
-.delete-form{
-    display: inline;
-}
-#avatar{
-    font-weight:300;
-    color:red;
+#secretcode {
+  display: visible;
 }
 
-#login_signup li{
-    margin-left: 10px;
-    display: inline;
+.deletebtn {
+  background-color: inherit;
 }
-#login_signup li a{
-    text-decoration: none;
+.deletebtn:hover {
+  color: red;
+}
+.editbtn {
+  color: inherit;
+  background-color: inherit;
+}
+.editbtn:hover {
+  color: orange;
+}
+.delete-form {
+  display: inline;
+}
+#avatar {
+  font-weight: 300;
+  color: red;
 }
 
+#login_signup li {
+  margin-left: 10px;
+  display: inline;
+}
+#login_signup li a {
+  text-decoration: none;
+}
 
 /*==================================*/
 body {
