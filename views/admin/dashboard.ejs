@@ -73,7 +73,7 @@
                     <tr>
                       <td><%= i %></td>
                       <td><%=blog.title%></td>
-                      <td>Web Develpment</td>
+                      <td><%= blog.category ? blog.category : "no category" %></td>
                       <td>Nov 01 2018</td>
                       <td>
                         <a href="/blogs/<%= blog._id %>" class="btn btn-secondary">
