@@ -55,8 +55,8 @@
                       <tr>
                         <td><%= i %></td>
                         <td><%=blog.title%></td>
-                        <td>Web Develpment</td>
-                        <td>Nov 01 2018</td>
+                        <td><%= blog.category ? blog.category : "no category" %></td>
+                        <td><%= blog.created.toDateString() %></td>
                         <td>
                           <a href="/blogs/<%= blog._id %>" class="btn btn-secondary">
                             <i class="fas fa-angle-double-right"></i> Details</a

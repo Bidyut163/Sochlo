@@ -1,5 +1,7 @@
 <% include ../partials/dashboardHeader %>
 
+
+
     <!-- HEADER -->
     <header id="main-header" class="py-2 bg-primary text-white">
       <div class="container">
@@ -74,7 +76,7 @@
                       <td><%= i %></td>
                       <td><%=blog.title%></td>
                       <td><%= blog.category ? blog.category : "no category" %></td>
-                      <td>Nov 01 2018</td>
+                      <td><%= blog.created.toDateString() %></td>
                       <td>
                         <a href="/blogs/<%= blog._id %>" class="btn btn-secondary">
                           <i class="fas fa-angle-double-right"></i> Details</a
@@ -93,14 +95,15 @@
               <div class="card-body">
                 <h3>Posts</h3>
                 <h4 class="display-4"><i class="fas fa-pencil-alt"></i> <%= (i-1) %></h4>
-                <button class="btn btn-outline-light btn-sm">View</button>
+                <a href="/admin/posts" class="btn btn-outline-light btn-sm">View</a>
               </div>
             </div>
             <div class="card bg-success text-center text-white mb-3">
               <div class="card-body">
                 <h3>Categories</h3>
-                <h4 class="display-4"><i class="fas fa-folder"></i> 4</h4>
-                <button class="btn btn-outline-light btn-sm">View</button>
+                <% let categoryCount=0; categories.forEach(category => { categoryCount++}) %>
+                <h4 class="display-4"><i class="fas fa-folder"></i> <%= categoryCount%></h4>
+                <a href="/admin/categories" class="btn btn-outline-light btn-sm">View</a>
               </div>
             </div>
             <div class="card bg-warning text-center text-white mb-3">
@@ -115,5 +118,137 @@
         </div>
       </div>
     </section>
+
+
+    <%#-------------------------------------------------------%>
+
+        <!-- MODALS -->
+
+    <!-- ADD POST MODAL -->
+    <div class="modal fade" id="addPostModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">Add Post</h5>
+            <button class="close" data-dismiss="modal">
+              <span class="text-white">&times;</span>
+            </button>
+          </div>
+          <!-- modal-header -->
+          <form  action="/blogs" method="POST" enctype="multipart/form-data">
+          <div class="modal-body">            
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input name="blog[title]" type="text" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="category">Category</label>
+                <select name="blog[category]" class="form-control">
+                  <% categories.forEach(category => { %>
+                      <option value="<%= category.title %>"><%= category.title %></option>
+                  <%  }) %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="image">Upload Image</label>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="image" name="image" 
+                  accept="image/*" required />
+                  <label for="image" class="custom-file-label"
+                    >Choose File</label
+                  >
+                </div>
+                <div class="form-text text-muted">Max Size 3mb</div>
+              </div>
+              <div class="form-group">
+                <label for="body">Body</label>
+                <textarea name="blog[body]" class="form-control"></textarea>
+              </div>
+          </div>
+            <!-- modal body -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" >
+                Submit
+              </button>
+            </div>
+            <!-- modal-footer -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD CATEGORY MODAL -->
+    <div class="modal fade" id="addCategoryModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title">Add Category</h5>
+            <button class="close" data-dismiss="modal">
+              <span class="text-white">&times;</span>
+            </button>
+          </div>
+          <!-- modal-header -->
+          <form  action="/admin/categories" method="POST">
+          <div class="modal-body">
+            
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input name="category[title]" type="text" class="form-control" />
+              </div>
+            
+          </div>
+          <!-- modal body -->
+          <div class="modal-footer">
+            <button class="btn btn-success" >
+              Submit
+            </button>
+          </div>
+          <!-- modal-footer -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD USER MODAL -->
+    <div class="modal fade" id="addUserModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-warning text-white">
+            <h5 class="modal-title">Add User</h5>
+            <button class="close" data-dismiss="modal">
+              <span class="text-white">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input type="password" class="form-control" />
+              </div>
+            </form>
+          </div>
+          <!-- modal body -->
+          <div class="modal-footer">
+            <button class="btn btn-warning" data-dismiss="modal">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+<%#-------------------------------------------------------%>
+
 
 <% include ../partials/dashboardFooter %>

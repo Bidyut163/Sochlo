@@ -51,48 +51,20 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Web Develpment</td>
-                      <td>Nov 01 2018</td>
-                      <td>
-                        <a href="details.html" class="btn btn-secondary">
-                          <i class="fas fa-angle-double-right"></i> Details</a
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Tech Gadgets</td>
-                      <td>Nov 02 2018</td>
-                      <td>
-                        <a href="details.html" class="btn btn-secondary">
-                          <i class="fas fa-angle-double-right"></i> Details</a
-                        >
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>3</td>
-                      <td>Business</td>
-                      <td>Nov 08 2018</td>
-                      <td>
-                        <a href="details.html" class="btn btn-secondary">
-                          <i class="fas fa-angle-double-right"></i> Details</a
-                        >
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>4</td>
-                      <td>Health & Wellness</td>
-                      <td>Nov 10 2018</td>
-                      <td>
-                        <a href="details.html" class="btn btn-secondary">
-                          <i class="fas fa-angle-double-right"></i> Details</a
-                        >
-                      </td>
-                    </tr>
+                    <% let i= 1; categories.forEach(category => { %>                  
+                      <tr>
+                        <td><%= i %></td>
+                        <td><%= category.title %></td>
+                        <td><%= category.created.toDateString() %></td>
+                        <td>
+                          <form action="/admin/categories/<%= category._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">
+                              <i class="fas fa-angle-double-right"></i> Delete</button
+                            >
+                          </form>
+                        </td>
+                      </tr>
+                    <% i++; }) %>
                   </tbody>
                 </table>
               </div> <!-- card -->
@@ -100,5 +72,6 @@
         </div>
       </div>
     </section>
+
 
 <% include ../partials/dashboardFooter %>
