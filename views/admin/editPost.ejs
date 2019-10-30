@@ -1,0 +1,92 @@
+<% include ../partials/dashboardHeader %>
+<!-- HEADER -->
+    <header id="main-header" class="py-2 bg-primary text-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h1><i class="fas fa-pencil-alt"></i> Edit Post</h1>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ACTION SECTION -->
+    <section id="action" class="py-4 mb-4 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <a href="index.html" class="btn btn-light btn-block">
+              <i class="fas fa-arrow-left"></i> Back To Dashboard
+            </a>
+          </div>
+          <div class="col-md-3">
+            <a href="" class="btn btn-success btn-block">
+              <i class="fas fa-lock"></i> No Funtion
+            </a>
+          </div>
+          <div class="col-md-3">
+            <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-danger btn-block">
+                <i class="fas fa-trash"></i> Delete Post
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE SECTION -->
+    <section id="profile">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header"><h4>Edit Post</h4></div>
+              <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input
+                      id="username"
+                      name="blog[title]"
+                      type="text"
+                      class="form-control"
+                      value="<%= blog.title%>"
+                    />
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="category">Category</label>
+                    <select name="blog[category]" class="form-control">
+                      <% categories.forEach(category => { %>
+                          <option value="<%= category.title %>"><%= category.title %></option>
+                      <%  }) %>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="body">Body</label>
+                    <textarea name="blog[body]" class="form-control"><%= blog.body %></textarea>        
+                  </div>
+                  
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-sm" >
+                  Save Changes
+                </button>
+              </div>
+              <!-- modal-footer -->
+              </form>
+            </div>
+          </div>
+          <!-- col-md-9 -->
+          <div class="col-md-3">
+            <h1>Your Avatar</h1>
+            <img src="/stylesheets/img/avatar.png" class="d-block img-fluid mb-3" alt="" />
+            <button class="btn btn-primary btn-block">Edit Image</button>
+            <button class="btn btn-danger btn-block">Delete Image</button>
+          </div>
+          <!-- col-md-3 -->
+        </div>
+      </div>
+    </section>
+<% include ../partials/dashboardFooter %>
