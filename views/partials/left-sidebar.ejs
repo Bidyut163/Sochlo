@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+
+    <link rel="stylesheet" href="/stylesheets/css/style.css" />
+    <!-- Custom Stylesheet -->
+    
+    <title>Sochlo_home</title>
+  </head>
+  <body>
+    <div class="container">
+      <aside class="left-sidebar">
+        <a href="/"><img class="logo" src="/stylesheets/img/logo/brand2.png" /></a>
+
+        <a href="<%= currentUser? '/Logout' : '/Login' %>" class="btn btn__login">
+        <%= currentUser? "Logout" : "Login" %>  
+        </a>
+        
+
+        <div class="catagories">
+          <ul class="catagories__list">
+            <% let i = 0; categories.forEach(category => { if(i<4){ %>
+                <li class="catagories__item"><a href="/categoryWisePosts/<%= category.title %>">
+                  <%= category.title %></a>
+                </li>
+            <%} i++ }); %>
+          </ul>
+          <ul class="catagories__list">
+            <li class="catagories__item">More</li>
+          </ul>
+        </div>
+        <!-- catagories -->
+
+        <div class="about">
+          <hr />
+          <ul class="about__list">
+            <% if(currentUser && currentUser.isUser){ %>
+            <li class="about__item"><a href="/admin/dashboard">Dashboard</a></li>
+            <% } %>
+            <li class="about__item"><a href="/about">About</a></li></li>
+            <li class="about__item"><a href="/members">Members</a></li>
+          </ul>
+        </div>
+        <!-- about -->
+
+        <div class="copyright">&copy; Sochlo</div>
+        <!-- copyright -->
+      </aside>
+      <!-- left-sidebar end -->
