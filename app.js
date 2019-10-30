@@ -49,7 +49,7 @@ app.use(function(req, res, next) {
 });
 
 // RESTFUL ROUTES
-app.use("/admin", middleware.isLoggedIn, adminRoutes);
+app.use("/admin", middleware.isLoggedIn, middleware.isUser, adminRoutes);
 app.use("/blogs", blogRoutes);
 app.use("/blogs/:id/comments", commentRoutes);
 app.use("/", indexRoutes);
