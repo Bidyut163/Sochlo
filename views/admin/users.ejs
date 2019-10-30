@@ -47,40 +47,42 @@
                       <th>#</th>
                       <th>Name</th>
                       <th>Email</th>
-                      <th></th>
+                      <th>Status</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>John Doe</td>
-                      <td>jdoe@gmail.com</td>
-                      <td>
-                        <a href="details.html" class="btn btn-secondary">
-                          <i class="fas fa-angle-double-right"></i> Details</a
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Harry White</td>
-                      <td>harry@yahoo.com</td>
-                      <td>
-                        <a href="details.html" class="btn btn-secondary">
-                          <i class="fas fa-angle-double-right"></i> Details</a
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Mary Jhonson</td>
-                      <td>mary@gmail.com</td>
-                      <td>
-                        <a href="details.html" class="btn btn-secondary">
-                          <i class="fas fa-angle-double-right"></i> Details</a
-                        >
-                      </td>
-                    </tr>
+                    <% let i = 0; users.forEach(user => { %>
+                      <tr>
+                        <td> <%=i+1%></td>
+                        <td><%= user.username%></td>
+                        <td><%= user.email%></td>
+                        <td>
+                           <% if(user.isUser){ %>
+                              <% if(user.isAdmin){%>
+                                <span>Admin</span>
+                              <% } else{%> 
+                                <span>User</span>
+                              <% }%>
+                           <% }%>
+                        </td>
+                        <td>
+                            <a href="/admin/profile/<%= user._id %>" class="btn btn-sm btn-info">
+                              Edit User                               
+                            </a>
+                          </form>
+                        </td>
+                        
+                        <td>
+                          <form action="/admin/<%= user._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-danger">
+                              Delete User
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                    <% i++; }) %>
                   </tbody>
                 </table>
               </div>

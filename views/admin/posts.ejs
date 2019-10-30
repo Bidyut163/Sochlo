@@ -54,13 +54,13 @@
                     <% let i= 1; blogs.forEach(blog => { %>
                       <tr>
                         <td><%= i %></td>
-                        <td><%=blog.title%></td>
+                        <td><a href="/blogs/<%=blog._id%>"><%=blog.title%></a></td>
                         <td><%= blog.category ? blog.category : "no category" %></td>
                         <td><%= blog.created.toDateString() %></td>
                         <td>
-                          <a href="/blogs/<%= blog._id %>" class="btn btn-secondary">
-                            <i class="fas fa-angle-double-right"></i> Details</a
-                          >
+                          <a href="/blogs/<%= blog._id %>/edit" class="btn btn-warning">
+                            Edit Post
+                          </a>
                         </td>
                       </tr>
                     <% i++ }) %>
