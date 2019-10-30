@@ -1,0 +1,35 @@
+.text-primary {
+  color: #f97413 !important;
+}
+
+.info-header {
+  width: 50%;
+  margin: auto;
+}
+
+.border-primary {
+  border-color: #f97413 !important;
+}
+
+.bg-primary {
+  background-color: #f97413 !important;
+}
+
+#members img {
+  margin-top: -50px;
+}
+
+#members .card:hover {
+  background-color: #f97413;
+  color: #fff;
+}
+
+#members .fab {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .info-header {
+    width: 100%;
+  }
+}
