@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var Blog = require("../models/blog");
 var Category = require("../models/category");
+var User = require("../models/user");
+var middleware = require("../middleware");
 
 router.get("/dashboard", (req, res) => {
   Blog.find({}, (err, blogs) => {
@@ -10,9 +12,14 @@ router.get("/dashboard", (req, res) => {
       : Category.find({}, (err, categories) => {
           err
             ? console.log(err)
-            : res.render("admin/dashboard", {
-                blogs: blogs,
-                categories: categories
+            : User.find({}, (err, users) => {
+                err
+                  ? console.log(err)
+                  : res.render("admin/dashboard", {
+                      blogs: blogs,
+                      categories: categories,
+                      users: users
+                    });
               });
         });
   });
@@ -33,7 +40,7 @@ router.get("/posts", (req, res) => {
   });
 });
 
-router.get("/categories", (req, res) => {
+router.get("/categories", middleware.isAdmin, (req, res) => {
   Category.find({}, (err, categories) => {
     err
       ? console.log(err)
@@ -42,7 +49,7 @@ router.get("/categories", (req, res) => {
 });
 
 // Create Category
-router.post("/categories", (req, res) => {
+router.post("/categories", middleware.isAdmin, (req, res) => {
   Category.create(req.body.category, (err, category) => {
     if (err) {
       req.flash("error", "something went wrong");
@@ -52,8 +59,8 @@ router.post("/categories", (req, res) => {
   });
 });
 
-// DELETE ROUTE
-router.delete("/categories/:id", function(req, res) {
+// DELETE CATEGORY ROUTE
+router.delete("/categories/:id", middleware.isAdmin, function(req, res) {
   //destroy category
   Category.findByIdAndRemove(req.params.id, err => {
     if (err) {
@@ -67,12 +74,50 @@ router.delete("/categories/:id", function(req, res) {
   //redirect somewhere
 });
 
-router.get("/users", (req, res) => {
-  res.render("admin/users");
+// GET USERS
+router.get("/users", middleware.isAdmin, (req, res) => {
+  User.find({}, (err, users) => {
+    err ? console.log(err) : res.render("admin/users", { users: users });
+  });
+});
+
+// GET PROFILE
+router.get("/profile/:id", (req, res) => {
+  User.findOne({ _id: req.params.id }, (err, user) => {
+    err ? console.log(err) : res.render("admin/profile", { user: user });
+  });
 });
 
 router.get("/login", (req, res) => {
   res.render("admin/login");
+});
+
+router.put("/profile/:id", middleware.isAdmin, (req, res) => {
+  const { username, email } = req.body;
+
+  if (req.body.access === "Admin") {
+    var isUser = true;
+    var isAdmin = true;
+  }
+
+  if (req.body.access === "User") {
+    isUser = true;
+    isAdmin = false;
+  }
+  User.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $set: { username, email, isUser, isAdmin } },
+    err => {
+      err ? console.log(err) : res.redirect("/admin/users");
+    }
+  );
+});
+
+// DELETE USER ROUTE
+router.delete("/:id", middleware.isAdmin, (req, res) => {
+  User.findByIdAndRemove(req.params.id, err => {
+    err ? console.log(err) : res.redirect("/admin/users");
+  });
 });
 
 module.exports = router;
