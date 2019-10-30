@@ -4,6 +4,7 @@ var User = require("../models/user");
 var passport = require("passport");
 var middleware = require("../middleware");
 var Blog = require("../models/blog");
+var Category = require("../models/category");
 
 var multer = require("multer");
 var storage = multer.diskStorage({
@@ -31,7 +32,13 @@ cloudinary.config({
 router.get("/", function(req, res) {
   //    res.render("landing");
   Blog.find({}, (err, blogs) => {
-    err ? console.log(err) : res.render("home", { blogs: blogs });
+    err
+      ? console.log(err)
+      : Category.find({}, (err, categories) => {
+          err
+            ? console.log(err)
+            : res.render("home", { blogs: blogs, categories: categories });
+        });
   });
 });
 
@@ -44,37 +51,31 @@ router.get("/register", function(req, res) {
 router.post("/register", function(req, res) {
   var newUser = new User({
     username: req.body.username,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    secretCode: req.body.secretCode
+    email: req.body.email
   });
 
-  if (req.body.secretCode === process.env.ADMIN_CODE) {
-    newUser.isAdmin = true;
-  }
-  User.register(newUser, req.body.password, function(err, user) {
+  User.register(newUser, req.body.password, (err, user) => {
     if (err) {
       req.flash("error", err.message);
       return res.redirect("/register");
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Welcome to sochlo.in " + user.username);
-      res.redirect("/blogs");
+      res.redirect("/");
     });
   });
 });
 
 //login Route
 router.get("/login", function(req, res) {
-  res.render("login");
+  res.render("admin/login");
 });
 
 // handles login logic
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/blogs",
+    successRedirect: "/",
     failureRedirect: "/login",
     failureFlash: true
   }),
@@ -122,9 +123,36 @@ router.post(
   }
 );
 
+// Member route
+router.get("/members", (req, res) => {
+  res.render("member");
+});
+
+// About Page route
+router.get("/about", (req, res) => {
+  res.render("about");
+});
+
+// CATEGORYWISE POST ROUTE
+router.get("/categoryWisePosts/:category", (req, res) => {
+  Category.find({}, (err, categories) => {
+    err
+      ? console.log(err)
+      : Blog.find({ category: req.params.category }, (err, blogs) => {
+          err
+            ? console.log(err)
+            : res.render("posts/categoryWisePost", {
+                blogs: blogs,
+                categories: categories,
+                title: req.params.category
+              });
+        });
+  });
+});
+
 //Page Not found Route
 router.get("*", function(req, res) {
-  res.render("sorry");
+  res.render("pageNotFound");
 });
 
 module.exports = router;
