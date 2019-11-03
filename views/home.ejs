@@ -1,40 +1,46 @@
 <% include ./partials/left-sidebar %>
 
-      <article class="content">
+      <div class="content">
         <div class="showcase">
           <div class="showcase__content">
             <h1 class="heading-primary">
-              <% var post; %>
-              <% blogs.forEach(blog => {post = blog}) %>
-              <a class="showcase__content-link" href="/blogs/<%= post._id %>"><%= post.title %></a>
-              
+               <% if(blogs.length){ %>
+              <a class="showcase__content-link" href="/blogs/<%= blogs[0]._id %>">
+                <%= blogs[0].title %>
+              </a>
+               <%} %>
             </h1>
-            <p class="heading-tertiary"><%= post.category %> <span> / <%= post.created.toDateString() %></span></p>
+            <% if(blogs.length){ %>
+            <p class="heading-tertiary"><%= blogs[0].category %> <span> / <%= blogs[0].created.toDateString() %></span></p>
+            <% } %>
             <div class="showcase__content--img-box">
-              <a href="/blogs/<%= post._id %>">
+              <% if(blogs.length){ %>
+              <a href="/blogs/<%= blogs[0]._id %>">
                 <img
-                  src="<%= post.image %>"
+                  src="<%= blogs[0].image %>"
                   alt="main-image"
                   class="showcase__content--img"
                 />
               </a>
+              <% } %>
             </div>
           </div>
           <!-- showcase__content -->
 
           <div class="showcase__sidebar">
             <ul class="showcase__sidebar--list">
-              <% let i=0; blogs.forEach(blog => { %>
-              <% if(i < 4) { %>
+              <% if((blogs.length-1)){ %>
+              <% for(var i=1; i<=(blogs.length <= 4 ? (blogs.length-1) : 4); i++) { %>
+              
               <li class="showcase__sidebar--item">
                 <h2 class="heading-secondary">
-                  <a href="/blogs/<%= blog._id %>"><%= blog.title %></a>
+                  <a href="/blogs/<%= blogs[i]._id %>"><%= blogs[i].title %></a>
                 </h2>
-                <p class="heading-tertiary"><%= blog.author.username %></p>
+                <p class="heading-tertiary"><%= blogs[i].author.username %></p>
                 <hr />
               </li>
               <% } %>
-              <% i++; }) %>
+              <% } %>
               <!-- item -->
             </ul>
             <!-- showcase__sideba--list  -->
@@ -46,32 +52,49 @@
         <hr class="mb-sm" />
 
         <section class="articles_section">
-           <% let j=0; blogs.forEach(blog => { %>
-            <% if(j < 4) { %>
+          <% if(blogs.length){ %>
+           <% for(var i=5; i<blogs.length; i++) { %>
           <div class="article">
             <div class="article__heading">
               <h1 class="heading-secondary mb-sm">
-                <a href="/blogs/<%= blog.id %>"><%= blog.title %></a>
+                <a href="/blogs/<%= blogs[i]._id %>"><%= blogs[i].title %></a>
               </h1>
-              <p class="small"><%= blog.category %></p>
-              <p class="date"><%= blog.created.toDateString() %></p>
+              <p class="small"><%= blogs[i].category %></p>
+              <p class="date"><%= blogs[i].created.toDateString() %></p>
             </div>
             <div class="article__content">
               <p class="para">
-                <a href="/blogs/<%= blog.id %>"><%- blog.body.substring(0, 500) %>...</a>
+                <a href="/blogs/<%= blogs[i].id %>"><%- blogs[i].body.substring(0, 500) %>...</a>
               </p>
             </div>
             <div class="article__img-box">
-              <a href="/blogs/<%= blog.id %>"><img src="<%= blog.image %>" alt="article-img" class="article__img" /></a>
+              <a href="/blogs/<%= blogs[i].id %>"><img src="<%= blogs[i].image %>" alt="article-img" class="article__img" /></a>
             </div>
           </div>
           <!-- article -->
           <hr class="mb-sm" />
           <% } %>
-          <% j++; }) %>
-        </section>
-        <!-- -------------------- -->
-      </article>
+          <% } %>
+
+          <!-- PAGINATION -->
+          <div class="pagination">
+            <ul class="pagination__list">
+              <% if (current == 1) { %>
+                <li class="pagination__item disabled"><a class="pagination__link">&laquo; Prev</a></li>
+              <% } else { %>  
+                <li class="pagination__item"><a href="/" class="pagination__link">&laquo; Prev</a></li>
+              <% } %>
+
+              <% if (current == pages) { %>
+                <li class="pagination__item disabled"><a class="pagination__link disabled">Next &raquo;</a></li>
+              <% } else { %>
+                <li class="pagination__item"><a href="/?page=<%= Number(current) + 1 %>" class="pagination__link">Next &raquo;</a></li>
+              <% } %>
+            </ul>
+          </div>
+          </section>
+          <!-- -------------------- -->
+      </div>
       
       <!-- content -->
       

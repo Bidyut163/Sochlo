@@ -2,11 +2,13 @@
 
         
         <div class="content">
+          <% title ? %>
           <h1 class="heading-primary mb-sm mt-sm"><%= title %></h1>
+          <% : %> <span>&nbsp;</span>
           <hr class="mb-sm" />
           <section class="articles_section">
-            <% let j=0; blogs.forEach(blog => { %>
-              <% if(j < 10) { %>
+            <% blogs.forEach(blog => { %>
+              
             <div class="article">
               <div class="article__heading">
                 <h1 class="heading-secondary mb-sm">
@@ -26,8 +28,29 @@
             </div>
             <!-- article -->
             <hr class="mb-sm" />
-            <% } %>
-            <% j++; }) %>
+            
+            <% }) %>
+
+             <!-- PAGINATION -->
+            <div class="pagination">
+              <ul class="pagination__list">
+                <% if (current == 1) { %>
+                  <li class="pagination__item disabled"><a class="pagination__link">&laquo; Prev</a></li>
+                <% } else { %>  
+                  <li class="pagination__item"><a href="/" class="pagination__link">&laquo; Prev</a></li>
+                <% } %>
+
+                <% if (current == pages) { %>
+                  <li class="pagination__item disabled"><a class="pagination__link disabled">Next &raquo;</a></li>
+                <% } else { %>
+                <% if(title){ %>
+                  <li class="pagination__item"><a href="/categoryWisePosts/<%= title %>?page=<%= Number(current) + 1 %>" class="pagination__link">Next &raquo;</a></li>
+                  <% } else{%>
+                      <li class="pagination__item"><a href="/?page=<%= Number(current) + 1 %>" class="pagination__link">Next &raquo;</a></li>
+                  <% } %>
+                <% } %>
+              </ul>
+            </div>
           </section>
         </div>
 

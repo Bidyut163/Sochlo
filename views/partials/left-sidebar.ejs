@@ -17,9 +17,60 @@
   </head>
   <body>
     <div class="container">
-      <aside class="left-sidebar">
-        <a href="/"><img class="logo" src="/stylesheets/img/logo/brand2.png" /></a>
+      <div class="more-categories">
+        <input type="checkbox" class="more-categories__checkbox" id="catagories-toggle" />
+        <label for="catagories-toggle" class="more-categories__button">
+          <span class="more-categories__icon">&larr;</span>
+        </label>
 
+        <nav class="more-categories__nav">
+          <ul class="more-categories__list">
+            <% if(categories.length){ %>
+            <% categories.forEach(category => { %>
+                <li class="more-categories__item">
+                <a href="/categoryWisePosts/<%= category.title %>" class="more-categories__link">
+                  <%= category.title %>
+                </a>
+                </li>
+            <% }); %>
+            <% } %>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Navigation Menu Start -->
+      <div class="navigation">
+        <input type="checkbox" class="navigation__checkbox" id="navi-toggle" />
+        <label for="navi-toggle" class="navigation__button">
+          <span class="navigation__icon">&nbsp;</span>
+        </label>
+
+        <div class="navigation__background">&nbsp;</div>
+
+        <nav class="navigation__nav">
+          <ul class="navigation__list">
+            <li class="navigation__item">
+              <a href="/login" class="navigation__link">Login</a>
+            </li>
+            <% if(categories.length){ %>
+            <% categories.forEach(category => { %>
+                <li class="navigation__item">
+                <a href="/categoryWisePosts/<%= category.title %>" class="navigation__link">
+                  <%= category.title %>
+                </a>
+                </li>
+            <% }); %>
+            <% } %>
+          </ul>
+        </nav>
+      </div>
+      <!-- Navigation Menu End -->
+
+
+      <section class="left-sidebar">
+        <div class="logo-box">
+          <a href="/"><img class="logo-img" src="/stylesheets/img/logo/brand2.png" /></a>
+        </div>
         <a href="<%= currentUser? '/Logout' : '/Login' %>" class="btn btn__login">
         <%= currentUser? "Logout" : "Login" %>  
         </a>
@@ -27,15 +78,16 @@
 
         <div class="catagories">
           <ul class="catagories__list">
+            <% if(categories.length){ %>
             <% let i = 0; categories.forEach(category => { if(i<4){ %>
                 <li class="catagories__item"><a href="/categoryWisePosts/<%= category.title %>">
                   <%= category.title %></a>
                 </li>
             <%} i++ }); %>
+            <% } %>
+            <li class="catagories__item"><label for="catagories-toggle">More</label></li>
           </ul>
-          <ul class="catagories__list">
-            <li class="catagories__item">More</li>
-          </ul>
+          
         </div>
         <!-- catagories -->
 
@@ -53,5 +105,5 @@
 
         <div class="copyright">&copy; Sochlo</div>
         <!-- copyright -->
-      </aside>
+      </section>
       <!-- left-sidebar end -->
