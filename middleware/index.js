@@ -1,5 +1,6 @@
 var middlewareObj = {};
 var Comment = require("../models/comment");
+var Blog = require("../models/blog");
 
 middlewareObj.isLoggedIn = function(req, res, next) {
   if (req.isAuthenticated()) {
@@ -27,6 +28,27 @@ middlewareObj.isUser = function(req, res, next) {
     res.redirect("back");
   }
   res.redirect("back");
+};
+
+middlewareObj.checkPostOwnership = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    Blog.findById(req.params.id, function(err, blog) {
+      if (err) {
+        req.flash("error", " something went wrong.");
+        res.redirect("back");
+      } else {
+        if (blog.author.id.equals(req.user._id) || req.user.isAdmin) {
+          next();
+        } else {
+          req.flash("error", "You do not have the permission to do that");
+          res.redirect("back");
+        }
+      }
+    });
+  } else {
+    req.flash("error", "You need to login first!");
+    res.redirect("back");
+  }
 };
 
 middlewareObj.checkCommentOwnership = function(req, res, next) {
