@@ -6,6 +6,7 @@ var middleware = require("../middleware");
 var Blog = require("../models/blog");
 var Category = require("../models/category");
 
+// Image Upload
 var multer = require("multer");
 var storage = multer.diskStorage({
   filename: function(req, file, callback) {
@@ -30,21 +31,66 @@ cloudinary.config({
 
 //Index Route
 router.get("/", function(req, res) {
-  //    res.render("landing");
-  Blog.find({}, (err, blogs) => {
-    err
-      ? console.log(err)
-      : Category.find({}, (err, categories) => {
-          err
-            ? console.log(err)
-            : res.render("home", { blogs: blogs, categories: categories });
-        });
-  });
+  // Pagination
+  var perPage = 9;
+  var pageQuery = parseInt(req.query.page);
+  var pageNumber = pageQuery ? pageQuery : 1;
+
+  Blog.find({})
+    .sort({ $natural: -1 })
+    .skip(perPage * pageNumber - perPage)
+    .limit(perPage)
+    .exec((err, blogs) => {
+      Blog.count().exec((err, count) => {
+        err
+          ? console.log(err)
+          : Category.find({}, (err, categories) => {
+              if (err) {
+                console.log(err);
+              } else {
+                var renderPage;
+                pageNumber === 1
+                  ? (renderPage = "home")
+                  : (renderPage = "posts/nextPagePosts");
+
+                res.render(renderPage, {
+                  blogs: blogs,
+                  categories: categories,
+                  current: pageNumber,
+                  pages: Math.ceil(count / perPage),
+                  title: false
+                });
+              }
+            });
+      });
+    });
 });
 
-// sign up form
-router.get("/register", function(req, res) {
-  res.render("register");
+// CATEGORYWISE POST ROUTE
+router.get("/categoryWisePosts/:category", (req, res) => {
+  var perPage = 9;
+  var pageQuery = parseInt(req.query.page);
+  var pageNumber = pageQuery ? pageQuery : 1;
+  Category.find({}, (err, categories) => {
+    err
+      ? console.log(err)
+      : Blog.find({ category: req.params.category })
+          .sort({ $natural: -1 })
+          .limit(perPage)
+          .exec((err, blogs) => {
+            Blog.count().exec((err, count) => {
+              err
+                ? console.log(err)
+                : res.render("posts/nextPagePosts", {
+                    blogs: blogs,
+                    categories: categories,
+                    current: pageNumber,
+                    pages: Math.ceil(count / perPage),
+                    title: req.params.category
+                  });
+            });
+          });
+  });
 });
 
 //handles sign up logic
@@ -57,7 +103,7 @@ router.post("/register", function(req, res) {
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
       req.flash("error", err.message);
-      return res.redirect("/register");
+      return res.redirect("/");
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Welcome to sochlo.in " + user.username);
@@ -75,7 +121,7 @@ router.get("/login", function(req, res) {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/admin/dashboard",
     failureRedirect: "/login",
     failureFlash: true
   }),
@@ -90,38 +136,38 @@ router.get("/logout", function(req, res) {
 });
 
 //User Profile Route
-router.get("/user/:id", middleware.isLoggedIn, function(req, res) {
-  User.findById(req.params.id, function(err, foundUser) {
-    if (err) {
-      req.flash("error", err.message);
-      res.redirect("back");
-    } else {
-      res.render("users/show", { user: foundUser });
-    }
-  });
-});
+// router.get("/user/:id", middleware.isLoggedIn, function(req, res) {
+//   User.findById(req.params.id, function(err, foundUser) {
+//     if (err) {
+//       req.flash("error", err.message);
+//       res.redirect("back");
+//     } else {
+//       res.render("users/show", { user: foundUser });
+//     }
+//   });
+// });
 
 // add User Profile pic
-router.post(
-  "/user/:id",
-  middleware.isLoggedIn,
-  upload.single("avatar"),
-  function(req, res) {
-    User.findById(req.params.id, function(err, foundUser) {
-      if (err) {
-        req.flash("error", "something went wrong");
-        res.redirect("back");
-      } else {
-        cloudinary.uploader.upload(req.file.path, function(result) {
-          // add cloudinary url for the image to the campground object under image property
-          foundUser.avatar = result.secure_url;
-          foundUser.save();
-          res.redirect("/user/" + req.params.id);
-        });
-      }
-    });
-  }
-);
+// router.post(
+//   "/user/:id",
+//   middleware.isLoggedIn,
+//   upload.single("avatar"),
+//   function(req, res) {
+//     User.findById(req.params.id, function(err, foundUser) {
+//       if (err) {
+//         req.flash("error", "something went wrong");
+//         res.redirect("back");
+//       } else {
+//         cloudinary.uploader.upload(req.file.path, function(result) {
+//           // add cloudinary url for the image to the campground object under image property
+//           foundUser.avatar = result.secure_url;
+//           foundUser.save();
+//           res.redirect("/user/" + req.params.id);
+//         });
+//       }
+//     });
+//   }
+// );
 
 // Member route
 router.get("/members", (req, res) => {
@@ -131,23 +177,6 @@ router.get("/members", (req, res) => {
 // About Page route
 router.get("/about", (req, res) => {
   res.render("about");
-});
-
-// CATEGORYWISE POST ROUTE
-router.get("/categoryWisePosts/:category", (req, res) => {
-  Category.find({}, (err, categories) => {
-    err
-      ? console.log(err)
-      : Blog.find({ category: req.params.category }, (err, blogs) => {
-          err
-            ? console.log(err)
-            : res.render("posts/categoryWisePost", {
-                blogs: blogs,
-                categories: categories,
-                title: req.params.category
-              });
-        });
-  });
 });
 
 //Page Not found Route

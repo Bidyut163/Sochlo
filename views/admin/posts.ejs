@@ -51,9 +51,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% let i= 1; blogs.forEach(blog => { %>
+                    <% let postCount= 1; blogs.forEach(blog => { %>
                       <tr>
-                        <td><%= i %></td>
+                        <td><%= postCount %></td>
                         <td><a href="/blogs/<%=blog._id%>"><%=blog.title%></a></td>
                         <td><%= blog.category ? blog.category : "no category" %></td>
                         <td><%= blog.created.toDateString() %></td>
@@ -63,26 +63,55 @@
                           </a>
                         </td>
                       </tr>
-                    <% i++ }) %>
+                    <% postCount++ }) %>
                   </tbody>
                 </table>
               </div>
 
               <!-- PAGINATION -->
-              <nav class="ml-4">
-                <ul class="pagination">
-                  <li class="page-item disabled">
-                    <a href="" class="page-link">Previous</a>
-                  </li>
-                  <li class="page-item active">
-                    <a href="" class="page-link">1</a>
-                  </li>
-                  <li class="page-item"><a href="" class="page-link">2</a></li>
-                  <li class="page-item"><a href="" class="page-link">3</a></li>
-                  <li class="page-item">
-                    <a href="" class="page-link">Next</a>
-                  </li>
+              <nav aria-label="Page navigation">
+                <% if (pages && pages > 0) { %>
+                <ul class="pagination justify-content-center">
+                    <% if (current == 1) { %>
+                    <li class="page-item disabled"><a class="page-link">First</a></li>
+                    <% } else { %>
+                    <li><a class="page-link" href="/admin/blogs">First</a></li>
+                    <% } %>
+            
+                    <% if (current == 1) { %>
+                    <li class="page-item disabled"><a class="page-link">«</a></li>
+                    <% } else { %>
+                    <li><a class="page-link" href="/admin/blogs?page=<%= Number(current) - 1 %>">«</a></li>
+                    <% } %>
+            
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                    <li class="active"><a class="page-link"><%= i %></a></li>
+                    <% } else { %>
+                    <li><a class="page-link" href="/admin/blogs?page=<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                    <% } %>
+                    <% } %>
+            
+                    <% if (current == pages) { %>
+                    <li class="page-item disabled"><a class="page-link">»</a></li>
+                    <% } else { %>
+                    <li><a class="page-link" href="/admin/blogs?page=<%= Number(current) + 1 %>">»</a></li>
+                    <% } %>
+            
+                    <% if (current == pages) { %>
+                    <li class="page-item disabled"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                    <li><a class="page-link" href="/admin/blogs?page=<%= pages %>">Last</a></li>
+                    <% } %>
                 </ul>
+                <% } %>
               </nav>
             </div>
             <!-- card -->

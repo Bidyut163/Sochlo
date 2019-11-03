@@ -27,23 +27,18 @@ cloudinary.config({
 });
 
 // INDEX ROUTE
-router.get("/", function(req, res) {
-  Blog.find({}, function(err, blogs) {
-    if (err) {
-      console.log("ERROR!");
-    } else {
-      res.render("blogs/index", { blogs: blogs });
-    }
-  });
-});
-
-// NEW ROUTE
-router.get("/new", middleware.isAdmin, function(req, res) {
-  res.render("blogs/new");
-});
+// router.get("/", function(req, res) {
+//   Blog.find({}, function(err, blogs) {
+//     if (err) {
+//       console.log("ERROR!");
+//     } else {
+//       res.render("home", { blogs: blogs });
+//     }
+//   });
+// });
 
 // CREATE ROUTE
-router.post("/", middleware.isAdmin, upload.single("image"), (req, res) => {
+router.post("/", middleware.isUser, upload.single("image"), (req, res) => {
   cloudinary.uploader.upload(req.file.path, function(result) {
     // add cloudinary url for the image to the campground object under image property
     req.body.blog.image = result.secure_url;
@@ -57,13 +52,18 @@ router.post("/", middleware.isAdmin, upload.single("image"), (req, res) => {
         req.flash("error", "something went wrong");
         return res.redirect("back");
       }
-      res.redirect("/blogs/");
+      res.redirect("/");
     });
   });
 });
 
 // SHOW ROUTE
 router.get("/:id", function(req, res) {
+  var perPage;
+  var pageQuery = parseInt(req.query.page);
+  var pageNumber = pageQuery ? pageQuery : 1;
+
+  pageNumber === 1 ? (perPage = 3) : (perPage = 9);
   Category.find({}, (err, categories) => {
     err
       ? console.log(err)
@@ -73,22 +73,36 @@ router.get("/:id", function(req, res) {
             if (err) {
               res.redirect("/blogs");
             } else {
-              Blog.find({ category: foundBlog.category }, (err, blogs) => {
-                err
-                  ? console.log(err)
-                  : res.render("posts/post", {
-                      blog: foundBlog,
-                      blogs: blogs,
-                      categories: categories
-                    });
-              });
+              Blog.find({ category: foundBlog.category })
+                .sort({ $natural: -1 })
+                .skip(perPage * pageNumber - perPage)
+                .limit(perPage)
+                .exec((err, blogs) => {
+                  Blog.count().exec((err, count) => {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      var renderPage;
+                      pageNumber === 1
+                        ? (renderPage = "posts/post")
+                        : (renderPage = "posts/nextPagePosts");
+                      res.render(renderPage, {
+                        blog: foundBlog,
+                        blogs: blogs,
+                        categories: categories,
+                        current: pageNumber,
+                        pages: Math.ceil(count / perPage)
+                      });
+                    }
+                  });
+                });
             }
           });
   });
 });
 
 // EDIT ROUTE
-router.get("/:id/edit", middleware.isAdmin, function(req, res) {
+router.get("/:id/edit", middleware.isUser, function(req, res) {
   Category.find({}, (err, categories) => {
     if (err) {
       console.log(err);
@@ -109,7 +123,7 @@ router.get("/:id/edit", middleware.isAdmin, function(req, res) {
 });
 
 // UPDATE ROUTE
-router.put("/:id", middleware.isAdmin, function(req, res) {
+router.put("/:id", middleware.checkPostOwnership, function(req, res) {
   req.body.blog.body = req.sanitize(req.body.blog.body);
   Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(
     err,
@@ -124,13 +138,13 @@ router.put("/:id", middleware.isAdmin, function(req, res) {
 });
 
 // DELETE ROUTE
-router.delete("/:id", middleware.isAdmin, function(req, res) {
+router.delete("/:id", middleware.checkPostOwnership, function(req, res) {
   //destroy blog
   Blog.findByIdAndRemove(req.params.id, function(err) {
     if (err) {
-      res.redirect("/blogs");
+      res.redirect("/admin/blogs");
     } else {
-      res.redirect("/admin/posts");
+      res.redirect("/admin/blogs");
     }
   });
   //redirect somewhere

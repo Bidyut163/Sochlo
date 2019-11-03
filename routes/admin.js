@@ -6,38 +6,61 @@ var User = require("../models/user");
 var middleware = require("../middleware");
 
 router.get("/dashboard", (req, res) => {
-  Blog.find({}, (err, blogs) => {
-    err
-      ? console.log(err)
-      : Category.find({}, (err, categories) => {
-          err
-            ? console.log(err)
-            : User.find({}, (err, users) => {
-                err
-                  ? console.log(err)
-                  : res.render("admin/dashboard", {
-                      blogs: blogs,
-                      categories: categories,
-                      users: users
-                    });
-              });
-        });
-  });
+  var perPage = 8;
+  var pageQuery = parseInt(req.query.page);
+  var pageNumber = pageQuery ? pageQuery : 1;
+
+  Blog.find({})
+    .skip(perPage * pageNumber - perPage)
+    .limit(perPage)
+    .exec((err, blogs) => {
+      Blog.count().exec((err, count) => {
+        err
+          ? console.log(err)
+          : Category.find({}, (err, categories) => {
+              err
+                ? console.log(err)
+                : User.find({}, (err, users) => {
+                    err
+                      ? console.log(err)
+                      : res.render("admin/dashboard", {
+                          blogs: blogs,
+                          categories: categories,
+                          users: users,
+
+                          current: pageNumber,
+                          pages: Math.ceil(count / perPage)
+                        });
+                  });
+            });
+      });
+    });
 });
 
-router.get("/posts", (req, res) => {
-  Blog.find({}, (err, blogs) => {
-    err
-      ? console.log(err)
-      : Category.find({}, (err, categories) => {
-          err
-            ? console.log(err)
-            : res.render("admin/posts", {
-                blogs: blogs,
-                categories: categories
-              });
-        });
-  });
+router.get("/blogs", (req, res) => {
+  var perPage = 8;
+  var pageQuery = parseInt(req.query.page);
+  var pageNumber = pageQuery ? pageQuery : 1;
+
+  Blog.find({})
+    .skip(perPage * pageNumber - perPage)
+    .limit(perPage)
+    .exec((err, blogs) => {
+      Blog.count().exec((err, count) => {
+        err
+          ? console.log(err)
+          : Category.find({}, (err, categories) => {
+              err
+                ? console.log(err)
+                : res.render("admin/posts", {
+                    blogs: blogs,
+                    categories: categories,
+                    current: pageNumber,
+                    pages: Math.ceil(count / perPage)
+                  });
+            });
+      });
+    });
 });
 
 router.get("/categories", middleware.isAdmin, (req, res) => {
