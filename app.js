@@ -16,7 +16,7 @@ var blogRoutes = require("./routes/blogs"),
   adminRoutes = require("./routes/admin");
 
 // APP CONFIG
-var url = process.env.DATABASEURL || "mongodb://localhost/sochlo";
+var url = process.env.DATABASEURL || "mongodb://localhost/sochlo2";
 mongoose.connect(url);
 
 app.set("view engine", "ejs");
