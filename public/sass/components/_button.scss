@@ -1,0 +1,38 @@
+.btn {
+  &,
+  &:link,
+  &:visited {
+    text-decoration: none;
+    text-align: center;
+
+    font-size: 1.4rem;
+    display: inline-block;
+    width: 70%;
+
+    background-color: $color-white;
+    color: $color-primary-dark;
+
+    border: 1px solid $color-primary-dark;
+    border-radius: 2px;
+    padding: 0.7rem 2rem;
+
+    cursor: pointer;
+  }
+
+  &:hover {
+    background-color: $color-primary-dark;
+    color: $color-white;
+    transition: 0.3s;
+  }
+
+  &__login {
+    margin-left: 2rem;
+    width: 70%;
+
+    @include respond(tab-port) {
+      margin: 0 auto;
+      display: none;
+      visibility: hidden;
+    }
+  }
+}

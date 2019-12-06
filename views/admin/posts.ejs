@@ -51,14 +51,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% let postCount= 1; blogs.forEach(blog => { %>
+                    <% let postCount= 1; posts.forEach(post => { %>
                       <tr>
                         <td><%= postCount %></td>
-                        <td><a href="/blogs/<%=blog._id%>"><%=blog.title%></a></td>
-                        <td><%= blog.category ? blog.category : "no category" %></td>
-                        <td><%= blog.created.toDateString() %></td>
+                        <td><a href="/posts/<%=post._id%>"><%=post.title%></a></td>
+                        <td><%= post.category ? post.category : "no category" %></td>
+                        <td><%= post.created.toDateString() %></td>
                         <td>
-                          <a href="/blogs/<%= blog._id %>/edit" class="btn btn-warning">
+                          <a href="/posts/<%= post._id %>/edit" class="btn btn-warning">
                             Edit Post
                           </a>
                         </td>
@@ -75,13 +75,13 @@
                     <% if (current == 1) { %>
                     <li class="page-item disabled"><a class="page-link">First</a></li>
                     <% } else { %>
-                    <li><a class="page-link" href="/admin/blogs">First</a></li>
+                    <li><a class="page-link" href="/admin/posts">First</a></li>
                     <% } %>
             
                     <% if (current == 1) { %>
                     <li class="page-item disabled"><a class="page-link">«</a></li>
                     <% } else { %>
-                    <li><a class="page-link" href="/admin/blogs?page=<%= Number(current) - 1 %>">«</a></li>
+                    <li><a class="page-link" href="/admin/posts?page=<%= Number(current) - 1 %>">«</a></li>
                     <% } %>
             
                     <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
@@ -92,7 +92,7 @@
                     <% if (i == current) { %>
                     <li class="active"><a class="page-link"><%= i %></a></li>
                     <% } else { %>
-                    <li><a class="page-link" href="/admin/blogs?page=<%= i %>"><%= i %></a></li>
+                    <li><a class="page-link" href="/admin/posts?page=<%= i %>"><%= i %></a></li>
                     <% } %>
                     <% if (i == Number(current) + 4 && i < pages) { %>
                     <li class="page-item disabled"><a class="page-link">...</a></li>
@@ -102,13 +102,13 @@
                     <% if (current == pages) { %>
                     <li class="page-item disabled"><a class="page-link">»</a></li>
                     <% } else { %>
-                    <li><a class="page-link" href="/admin/blogs?page=<%= Number(current) + 1 %>">»</a></li>
+                    <li><a class="page-link" href="/admin/posts?page=<%= Number(current) + 1 %>">»</a></li>
                     <% } %>
             
                     <% if (current == pages) { %>
                     <li class="page-item disabled"><a class="page-link">Last</a></li>
                     <% } else { %>
-                    <li><a class="page-link" href="/admin/blogs?page=<%= pages %>">Last</a></li>
+                    <li><a class="page-link" href="/admin/posts?page=<%= pages %>">Last</a></li>
                     <% } %>
                 </ul>
                 <% } %>

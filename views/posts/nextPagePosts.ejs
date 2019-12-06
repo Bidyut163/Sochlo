@@ -7,23 +7,23 @@
           <% }%>
           <hr class="mb-sm" />
           <section class="articles_section">
-            <% blogs.forEach(blog => { %>
+            <% posts.forEach(post => { %>
               
             <div class="article">
               <div class="article__heading">
                 <h1 class="heading-secondary mb-sm">
-                  <a href="/blogs/<%= blog.id %>"><%= blog.title %></a>
+                  <a href="/posts/<%= post.id %>"><%= post.title %></a>
                 </h1>
-                <p class="small"><%= blog.category %></p>
-                <p class="date"><%= blog.created.toDateString() %></p>
+                <p class="small"><%= post.category %></p>
+                <p class="date"><%= post.created.toDateString() %></p>
               </div>
               <div class="article__content">
                 <p class="para">
-                  <a href="/blogs/<%= blog.id %>"><%- blog.body.substring(0, 500) %>...</a>
+                  <a href="/posts/<%= post.id %>"><%- post.body.substring(0, 500) %>...</a>
                 </p>
               </div>
               <div class="article__img-box">
-                <a href="/blogs/<%= blog.id %>"><img src="<%= blog.image %>" alt="article-img" class="article__img" /></a>
+                <a href="/posts/<%= post.id %>"><img src="<%= post.image %>" alt="article-img" class="article__img" /></a>
               </div>
             </div>
             <!-- article -->

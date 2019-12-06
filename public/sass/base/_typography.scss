@@ -1,0 +1,41 @@
+.heading-primary {
+  font-size: 3.2rem;
+
+  @include respond(phone) {
+    font-size: 2rem;
+  }
+}
+
+.heading-secondary {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+
+  @include respond(phone) {
+    font-size: 1.4rem;
+  }
+}
+
+.heading-tertiary {
+  font-size: 1.4rem;
+
+  @include respond(phone) {
+    font-size: 1rem;
+  }
+}
+
+.small {
+  font-size: 1.3rem;
+
+  @include respond(phone) {
+    font-size: 0.8rem;
+  }
+}
+
+.para {
+  font-size: 1.6rem;
+  color: #aaa;
+
+  @include respond(phone) {
+    font-size: 1.2rem;
+  }
+}

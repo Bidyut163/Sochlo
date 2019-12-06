@@ -25,7 +25,7 @@
             </a>
           </div>
           <div class="col-md-3">
-            <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+            <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
               <button type="submit" class="btn btn-danger btn-block">
                 <i class="fas fa-trash"></i> Delete Post
               </button>
@@ -42,22 +42,22 @@
           <div class="col-md-9">
             <div class="card">
               <div class="card-header"><h4>Edit Post</h4></div>
-              <form action="/blogs/<%= blog._id %>?_method=PUT" method="POST">
+              <form action="/posts/<%= post._id %>?_method=PUT" method="POST">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="title">Title</label>
                     <input
                       id="username"
-                      name="blog[title]"
+                      name="post[title]"
                       type="text"
                       class="form-control"
-                      value="<%= blog.title%>"
+                      value="<%= post.title%>"
                     />
                   </div>
                   
                   <div class="form-group">
                     <label for="category">Category</label>
-                    <select name="blog[category]" class="form-control">
+                    <select name="post[category]" class="form-control">
                       <% categories.forEach(category => { %>
                           <option value="<%= category.title %>"><%= category.title %></option>
                       <%  }) %>
@@ -65,7 +65,7 @@
                   </div>
                   <div class="form-group">
                     <label for="body">Body</label>
-                    <textarea name="blog[body]" class="form-control"><%= blog.body %></textarea>        
+                    <textarea name="post[body]" class="form-control"><%= post.body %></textarea>        
                   </div>
                   
               </div>

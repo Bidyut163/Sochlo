@@ -10,13 +10,13 @@ var bodyParser = require("body-parser"),
   express = require("express"),
   app = express();
 
-var blogRoutes = require("./routes/blogs"),
+var postRoutes = require("./routes/posts"),
   commentRoutes = require("./routes/comments"),
   indexRoutes = require("./routes/index"),
   adminRoutes = require("./routes/admin");
 
 // APP CONFIG
-var url = process.env.DATABASEURL || "mongodb://localhost/sochlo2";
+var url = process.env.DATABASEURL || "mongodb://localhost/sochlo";
 mongoose.connect(url);
 
 app.set("view engine", "ejs");
@@ -50,8 +50,8 @@ app.use(function(req, res, next) {
 
 // RESTFUL ROUTES
 app.use("/admin", middleware.isLoggedIn, middleware.isUser, adminRoutes);
-app.use("/blogs", blogRoutes);
-app.use("/blogs/:id/comments", commentRoutes);
+app.use("/posts", postRoutes);
+app.use("/posts/:id/comments", commentRoutes);
 app.use("/", indexRoutes);
 
 const port = process.env.PORT || 5000;

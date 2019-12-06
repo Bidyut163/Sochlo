@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var Blog = require("../models/blog");
+var Post = require("../models/post");
 var Category = require("../models/category");
 var middleware = require("../middleware");
 var multer = require("multer");
@@ -28,11 +28,11 @@ cloudinary.config({
 
 // INDEX ROUTE
 // router.get("/", function(req, res) {
-//   Blog.find({}, function(err, blogs) {
+//   Post.find({}, function(err, posts) {
 //     if (err) {
 //       console.log("ERROR!");
 //     } else {
-//       res.render("home", { blogs: blogs });
+//       res.render("home", { posts: posts });
 //     }
 //   });
 // });
@@ -41,13 +41,13 @@ cloudinary.config({
 router.post("/", middleware.isUser, upload.single("image"), (req, res) => {
   cloudinary.uploader.upload(req.file.path, function(result) {
     // add cloudinary url for the image to the campground object under image property
-    req.body.blog.image = result.secure_url;
+    req.body.post.image = result.secure_url;
     // add author to campground
-    req.body.blog.author = {
+    req.body.post.author = {
       id: req.user._id,
       username: req.user.username
     };
-    Blog.create(req.body.blog, function(err, blog) {
+    Post.create(req.body.post, function(err, post) {
       if (err) {
         req.flash("error", "something went wrong");
         return res.redirect("back");
@@ -67,18 +67,18 @@ router.get("/:id", function(req, res) {
   Category.find({}, (err, categories) => {
     err
       ? console.log(err)
-      : Blog.findById(req.params.id)
+      : Post.findById(req.params.id)
           .populate("comments")
-          .exec(function(err, foundBlog) {
+          .exec(function(err, foundPost) {
             if (err) {
-              res.redirect("/blogs");
+              res.redirect("/posts");
             } else {
-              Blog.find({ category: foundBlog.category })
+              Post.find({ category: foundPost.category })
                 .sort({ $natural: -1 })
                 .skip(perPage * pageNumber - perPage)
                 .limit(perPage)
-                .exec((err, blogs) => {
-                  Blog.count().exec((err, count) => {
+                .exec((err, posts) => {
+                  Post.count().exec((err, count) => {
                     if (err) {
                       console.log(err);
                     } else {
@@ -87,8 +87,8 @@ router.get("/:id", function(req, res) {
                         ? (renderPage = "posts/post")
                         : (renderPage = "posts/nextPagePosts");
                       res.render(renderPage, {
-                        blog: foundBlog,
-                        blogs: blogs,
+                        post: foundPost,
+                        posts: posts,
                         categories: categories,
                         current: pageNumber,
                         pages: Math.ceil(count / perPage)
@@ -108,12 +108,12 @@ router.get("/:id/edit", middleware.isUser, function(req, res) {
       console.log(err);
       res.redirect("/admin/posts");
     } else {
-      Blog.findById(req.params.id, function(err, foundBlog) {
+      Post.findById(req.params.id, function(err, foundPost) {
         if (err) {
-          res.redirect("/blogs");
+          res.redirect("/posts");
         } else {
           res.render("admin/editPost", {
-            blog: foundBlog,
+            post: foundPost,
             categories: categories
           });
         }
@@ -124,27 +124,27 @@ router.get("/:id/edit", middleware.isUser, function(req, res) {
 
 // UPDATE ROUTE
 router.put("/:id", middleware.checkPostOwnership, function(req, res) {
-  req.body.blog.body = req.sanitize(req.body.blog.body);
-  Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(
+  req.body.post.body = req.sanitize(req.body.post.body);
+  Post.findByIdAndUpdate(req.params.id, req.body.post, function(
     err,
-    updatedBlog
+    updatedPost
   ) {
     if (err) {
-      res.redirect("/blogs");
+      res.redirect("/posts");
     } else {
-      res.redirect("/blogs/" + req.params.id);
+      res.redirect("/posts/" + req.params.id);
     }
   });
 });
 
 // DELETE ROUTE
 router.delete("/:id", middleware.checkPostOwnership, function(req, res) {
-  //destroy blog
-  Blog.findByIdAndRemove(req.params.id, function(err) {
+  //destroy post
+  Post.findByIdAndRemove(req.params.id, function(err) {
     if (err) {
-      res.redirect("/admin/blogs");
+      res.redirect("/admin/posts");
     } else {
-      res.redirect("/admin/blogs");
+      res.redirect("/admin/posts");
     }
   });
   //redirect somewhere

@@ -1,0 +1,29 @@
+.right-sidebar {
+  flex: 0 0 22%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 78%;
+
+  position: fixed;
+
+  @include respond(tab-port) {
+    position: relative;
+    margin: 2rem;
+    display: none;
+    visibility: hidden;
+  }
+
+  &__img-box {
+    height: 20rem;
+    margin-top: 2rem;
+    margin-right: 1rem;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+  }
+}

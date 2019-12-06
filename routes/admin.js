@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var Blog = require("../models/blog");
+var Post = require("../models/post");
 var Category = require("../models/category");
 var User = require("../models/user");
 var middleware = require("../middleware");
@@ -10,11 +10,11 @@ router.get("/dashboard", (req, res) => {
   var pageQuery = parseInt(req.query.page);
   var pageNumber = pageQuery ? pageQuery : 1;
 
-  Blog.find({})
+  Post.find({})
     .skip(perPage * pageNumber - perPage)
     .limit(perPage)
-    .exec((err, blogs) => {
-      Blog.count().exec((err, count) => {
+    .exec((err, posts) => {
+      Post.count().exec((err, count) => {
         err
           ? console.log(err)
           : Category.find({}, (err, categories) => {
@@ -24,7 +24,7 @@ router.get("/dashboard", (req, res) => {
                     err
                       ? console.log(err)
                       : res.render("admin/dashboard", {
-                          blogs: blogs,
+                          posts: posts,
                           categories: categories,
                           users: users,
 
@@ -37,23 +37,23 @@ router.get("/dashboard", (req, res) => {
     });
 });
 
-router.get("/blogs", (req, res) => {
+router.get("/posts", (req, res) => {
   var perPage = 8;
   var pageQuery = parseInt(req.query.page);
   var pageNumber = pageQuery ? pageQuery : 1;
 
-  Blog.find({})
+  Post.find({})
     .skip(perPage * pageNumber - perPage)
     .limit(perPage)
-    .exec((err, blogs) => {
-      Blog.count().exec((err, count) => {
+    .exec((err, posts) => {
+      Post.count().exec((err, count) => {
         err
           ? console.log(err)
           : Category.find({}, (err, categories) => {
               err
                 ? console.log(err)
                 : res.render("admin/posts", {
-                    blogs: blogs,
+                    posts: posts,
                     categories: categories,
                     current: pageNumber,
                     pages: Math.ceil(count / perPage)

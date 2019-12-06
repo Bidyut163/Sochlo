@@ -1,0 +1,81 @@
+.more-categories {
+  &__checkbox {
+    display: none;
+  }
+
+  &__button {
+    position: fixed;
+    left: 0;
+    top: 0;
+    color: #fff;
+    font-size: 2rem;
+    transition: 0.3s;
+    visibility: hidden;
+
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+
+  &--icon {
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  &__checkbox:checked ~ &__nav {
+    opacity: 1;
+    visibility: visible;
+    width: 15%;
+
+    @include respond(tab-port) {
+      opacity: 0;
+      display: none;
+      visibility: hidden;
+      width: 0;
+    }
+  }
+
+  &__checkbox:checked ~ &__button {
+    left: 15rem;
+    top: 1rem;
+    visibility: visible;
+    z-index: 100;
+  }
+
+  &__nav {
+    background-color: $color-primary;
+
+    width: 15%;
+    height: 100vh;
+
+    position: fixed;
+    z-index: 1;
+    transition: 0.3s ease-out;
+
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+  }
+
+  &__list {
+    text-align: center;
+    padding: 4rem 1rem;
+    list-style-type: none;
+    font-size: 1.6rem;
+  }
+
+  &__item {
+    color: #eee;
+    padding: 0.5rem;
+    margin: 1rem 0;
+
+    &:hover {
+      color: #ccc;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+}

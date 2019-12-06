@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require("../models/user");
 var passport = require("passport");
 var middleware = require("../middleware");
-var Blog = require("../models/blog");
+var Post = require("../models/post");
 var Category = require("../models/category");
 
 // Image Upload
@@ -36,12 +36,12 @@ router.get("/", function(req, res) {
   var pageQuery = parseInt(req.query.page);
   var pageNumber = pageQuery ? pageQuery : 1;
 
-  Blog.find({})
+  Post.find({})
     .sort({ $natural: -1 })
     .skip(perPage * pageNumber - perPage)
     .limit(perPage)
-    .exec((err, blogs) => {
-      Blog.count().exec((err, count) => {
+    .exec((err, posts) => {
+      Post.count().exec((err, count) => {
         err
           ? console.log(err)
           : Category.find({}, (err, categories) => {
@@ -54,7 +54,7 @@ router.get("/", function(req, res) {
                   : (renderPage = "posts/nextPagePosts");
 
                 res.render(renderPage, {
-                  blogs: blogs,
+                  posts: posts,
                   categories: categories,
                   current: pageNumber,
                   pages: Math.ceil(count / perPage),
@@ -74,15 +74,15 @@ router.get("/categoryWisePosts/:category", (req, res) => {
   Category.find({}, (err, categories) => {
     err
       ? console.log(err)
-      : Blog.find({ category: req.params.category })
+      : Post.find({ category: req.params.category })
           .sort({ $natural: -1 })
           .limit(perPage)
-          .exec((err, blogs) => {
-            Blog.count().exec((err, count) => {
+          .exec((err, posts) => {
+            Post.count().exec((err, count) => {
               err
                 ? console.log(err)
                 : res.render("posts/nextPagePosts", {
-                    blogs: blogs,
+                    posts: posts,
                     categories: categories,
                     current: pageNumber,
                     pages: Math.ceil(count / perPage),

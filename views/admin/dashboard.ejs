@@ -75,14 +75,14 @@
                   </thead>
                   <tbody>
                   
-                  <% let postCount= 1; blogs.forEach(blog => { %>
+                  <% let postCount= 1; posts.forEach(post => { %>
                     <tr>
                       <td><%= postCount %></td>
-                      <td><%=blog.title%></td>
-                      <td><%= blog.category ? blog.category : "no category" %></td>
-                      <td><%= blog.created.toDateString() %></td>
+                      <td><%=post.title%></td>
+                      <td><%= post.category ? post.category : "no category" %></td>
+                      <td><%= post.created.toDateString() %></td>
                       <td>
-                        <a href="/blogs/<%= blog._id %>" class="btn btn-secondary">
+                        <a href="/posts/<%= post._id %>" class="btn btn-secondary">
                           <i class="fas fa-angle-double-right"></i> Details</a
                         >
                       </td>
@@ -187,15 +187,15 @@
             </button>
           </div>
           <!-- modal-header -->
-          <form  action="/blogs" method="POST" enctype="multipart/form-data">
+          <form  action="/posts" method="POST" enctype="multipart/form-data">
           <div class="modal-body">            
               <div class="form-group">
                 <label for="title">Title</label>
-                <input name="blog[title]" type="text" class="form-control" />
+                <input name="post[title]" type="text" class="form-control" />
               </div>
               <div class="form-group">
                 <label for="category">Category</label>
-                <select name="blog[category]" class="form-control">
+                <select name="post[category]" class="form-control">
                   <% categories.forEach(category => { %>
                       <option value="<%= category.title %>"><%= category.title %></option>
                   <%  }) %>
@@ -214,7 +214,7 @@
               </div>
               <div class="form-group">
                 <label for="body">Body</label>
-                <textarea name="blog[body]" class="form-control"></textarea>
+                <textarea name="post[body]" class="form-control"></textarea>
               </div>
           </div>
             <!-- modal body -->

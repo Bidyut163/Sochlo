@@ -1,0 +1,54 @@
+.article {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  margin-bottom: 2rem;
+
+  @include respond(phone) {
+    margin: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  & > * {
+    flex: 0 0 32%;
+
+    @include respond(tab-port) {
+      flex: 0 0 30%;
+    }
+
+    @include respond(phone) {
+      flex: 0 0 47%;
+    }
+  }
+
+  &__heading {
+    margin-right: 1rem;
+  }
+
+  &__content {
+    @include respond(phone) {
+      display: none;
+      visibility: hidden;
+    }
+  }
+
+  &__img-box {
+    margin: 0 auto;
+    height: 18rem;
+
+    @include respond(phone) {
+      height: 12rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__img {
+    height: 100%;
+    width: 100%;
+  }
+}

@@ -1,0 +1,22 @@
+.copyright {
+  margin-left: 2rem;
+  font-size: 1.2rem;
+
+  @include respond(tab-port) {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.responsive-nav {
+  visibility: hidden;
+
+  @include respond(tab-port) {
+    visibility: visible;
+
+    font-size: 4rem;
+    line-height: 0.5;
+
+    margin-right: 2rem;
+  }
+}

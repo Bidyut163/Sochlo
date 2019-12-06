@@ -4,20 +4,20 @@
         <div class="showcase">
           <div class="showcase__content">
             <h1 class="heading-primary">
-               <% if(blogs.length){ %>
-              <a class="showcase__content-link" href="/blogs/<%= blogs[0]._id %>">
-                <%= blogs[0].title %>
+               <% if(posts.length){ %>
+              <a class="showcase__content-link" href="/posts/<%= posts[0]._id %>">
+                <%= posts[0].title %>
               </a>
                <%} %>
             </h1>
-            <% if(blogs.length){ %>
-            <p class="heading-tertiary"><%= blogs[0].category %> <span> / <%= blogs[0].created.toDateString() %></span></p>
+            <% if(posts.length){ %>
+            <p class="heading-tertiary"><%= posts[0].category %> <span> / <%= posts[0].created.toDateString() %></span></p>
             <% } %>
             <div class="showcase__content--img-box">
-              <% if(blogs.length){ %>
-              <a href="/blogs/<%= blogs[0]._id %>">
+              <% if(posts.length){ %>
+              <a href="/posts/<%= posts[0]._id %>">
                 <img
-                  src="<%= blogs[0].image %>"
+                  src="<%= posts[0].image %>"
                   alt="main-image"
                   class="showcase__content--img"
                 />
@@ -29,14 +29,14 @@
 
           <div class="showcase__sidebar">
             <ul class="showcase__sidebar--list">
-              <% if((blogs.length-1)){ %>
-              <% for(var i=1; i<=(blogs.length <= 4 ? (blogs.length-1) : 4); i++) { %>
+              <% if((posts.length-1)){ %>
+              <% for(var i=1; i<=(posts.length <= 4 ? (posts.length-1) : 4); i++) { %>
               
               <li class="showcase__sidebar--item">
                 <h2 class="heading-secondary">
-                  <a href="/blogs/<%= blogs[i]._id %>"><%= blogs[i].title %></a>
+                  <a href="/posts/<%= posts[i]._id %>"><%= posts[i].title %></a>
                 </h2>
-                <p class="heading-tertiary"><%= blogs[i].author.username %></p>
+                <p class="heading-tertiary"><%= posts[i].author.username %></p>
                 <hr />
               </li>
               <% } %>
@@ -52,23 +52,23 @@
         <hr class="mb-sm" />
 
         <section class="articles_section">
-          <% if(blogs.length){ %>
-           <% for(var i=5; i<blogs.length; i++) { %>
+          <% if(posts.length){ %>
+           <% for(var i=5; i<posts.length; i++) { %>
           <div class="article">
             <div class="article__heading">
               <h1 class="heading-secondary mb-sm">
-                <a href="/blogs/<%= blogs[i]._id %>"><%= blogs[i].title %></a>
+                <a href="/posts/<%= posts[i]._id %>"><%= posts[i].title %></a>
               </h1>
-              <p class="small"><%= blogs[i].category %></p>
-              <p class="date"><%= blogs[i].created.toDateString() %></p>
+              <p class="small"><%= posts[i].category %></p>
+              <p class="date"><%= posts[i].created.toDateString() %></p>
             </div>
             <div class="article__content">
               <p class="para">
-                <a href="/blogs/<%= blogs[i].id %>"><%- blogs[i].body.substring(0, 500) %>...</a>
+                <a href="/posts/<%= posts[i].id %>"><%- posts[i].body.substring(0, 500) %>...</a>
               </p>
             </div>
             <div class="article__img-box">
-              <a href="/blogs/<%= blogs[i].id %>"><img src="<%= blogs[i].image %>" alt="article-img" class="article__img" /></a>
+              <a href="/posts/<%= posts[i].id %>"><img src="<%= posts[i].image %>" alt="article-img" class="article__img" /></a>
             </div>
           </div>
           <!-- article -->

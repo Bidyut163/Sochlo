@@ -1,0 +1,70 @@
+.showcase {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 3rem 3rem 3rem 0;
+
+  @include respond(phone) {
+    flex-direction: column;
+
+    padding: 1rem;
+  }
+
+  &__content {
+    flex: 0 0 60%;
+
+    cursor: pointer;
+    margin-right: 5rem;
+
+    @include respond(phone) {
+      margin-right: 0;
+      margin-bottom: 4rem;
+    }
+
+    &--img-box {
+      height: 35rem;
+      width: 40rem;
+
+      @include respond(phone) {
+        width: 100%;
+        height: 25rem;
+      }
+    }
+
+    &--img {
+      height: 100%;
+      width: 100%;
+    }
+
+    &-link {
+      display: inline-block;
+      word-break: break-all;
+    }
+
+    & > * {
+      margin-bottom: 1rem;
+    }
+
+    &:hover {
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+  }
+
+  &__sidebar {
+    flex: 1;
+
+    &--list {
+      list-style-type: none;
+
+      & > * {
+        margin-bottom: 3rem;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
