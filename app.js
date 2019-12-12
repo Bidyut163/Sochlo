@@ -17,7 +17,7 @@ var postRoutes = require("./routes/posts"),
 
 // APP CONFIG
 var url = process.env.DATABASEURL || "mongodb://localhost/sochlo";
-mongoose.connect(url);
+mongoose.connect(url, { useMongoClient: true });
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -57,5 +57,5 @@ app.use("/", indexRoutes);
 const port = process.env.PORT || 5000;
 
 app.listen(port, process.env.IP, function() {
-  console.log("SERVER IS RUNNING! at port", port);
+  console.log("SERVER IS RUNNING AT PORT", port);
 });
